@@ -9,8 +9,11 @@
 #import "STPopupPreviewRecognizer.h"
 #import <STPopup/STPopup.h>
 
+#define IS_IPHONE_X_AND_LARGER (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height >= 812.0)
+
 CGFloat const STPopupPreviewActionSheetButtonHeight = 57;
 CGFloat const STPopupPreviewActionSheetSpacing = 10;
+CGFloat const STPopupPreviewActionSheetSpacingX = 50;
 CGFloat const STPopupPreviewShowActionsOffset = 30;
 
 @interface STPopupPreviewAction ()
@@ -110,7 +113,7 @@ CGFloat const STPopupPreviewShowActionsOffset = 30;
 {
     [super layoutSubviews];
     
-    CGFloat spacing = STPopupPreviewActionSheetSpacing;
+	CGFloat spacing = IS_IPHONE_X_AND_LARGER ? STPopupPreviewActionSheetSpacingX : STPopupPreviewActionSheetSpacing;
     CGFloat buttonHeight = STPopupPreviewActionSheetButtonHeight;
     _topContainerView.frame = CGRectMake(spacing, spacing, self.superview.bounds.size.width - spacing * 2, _topContainerView.subviews.count * buttonHeight);
     _bottomContainerView.frame = CGRectMake(spacing, _topContainerView.frame.origin.y + _topContainerView.frame.size.height + spacing, self.superview.bounds.size.width - spacing * 2, _bottomContainerView.subviews.count * buttonHeight);
@@ -133,12 +136,14 @@ CGFloat const STPopupPreviewShowActionsOffset = 30;
     frame.size.width = self.superview.frame.size.width;
     self.frame = frame;
     [self layoutIfNeeded];
-    
+	
+	CGFloat spacing = IS_IPHONE_X_AND_LARGER ? STPopupPreviewActionSheetSpacingX : STPopupPreviewActionSheetSpacing;
+	
     if (_bottomContainerView) {
-        frame.size.height = _bottomContainerView.frame.origin.y + _bottomContainerView.frame.size.height + STPopupPreviewActionSheetSpacing;
+        frame.size.height = _bottomContainerView.frame.origin.y + _bottomContainerView.frame.size.height + spacing;
     }
     else {
-        frame.size.height = _topContainerView.frame.origin.y + _topContainerView.frame.size.height + STPopupPreviewActionSheetSpacing;
+        frame.size.height = _topContainerView.frame.origin.y + _topContainerView.frame.size.height + spacing;
     }
     frame.origin = CGPointMake(0, self.superview.frame.size.height - frame.size.height);
     self.frame = frame;
