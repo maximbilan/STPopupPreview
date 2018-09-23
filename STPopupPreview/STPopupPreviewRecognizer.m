@@ -9,6 +9,7 @@
 #import "STPopupPreviewRecognizer.h"
 #import <STPopup/STPopup.h>
 
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define IS_IPHONE_X_AND_LARGER (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height >= 812.0)
 
 CGFloat const STPopupPreviewActionSheetButtonHeight = 57;
